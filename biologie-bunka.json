@@ -50,7 +50,7 @@
       "hint": "Není obalena jadernou membránou.",
       "options": [
         {
-          "text": "V kruhovém chromozomu volně v cytoplazmě",
+          "text": "V kruhovém chromozomu",
           "correct": true
         },
         {
@@ -212,7 +212,7 @@
           "correct": true
         },
         {
-          "text": "Hladké ER vyrábí tuky, detoxikuje a skladuje vápník",
+          "text": "Hladké ER vyrábí tuky a skladuje vápník",
           "correct": true
         },
         {
@@ -370,7 +370,7 @@
       "hint": "Mají mnoho funkcí – zásoba, odpad, tlak.",
       "options": [
         {
-          "text": "Ukládají materiál, vyrovnávají tlak a recyklují látky",
+          "text": "Ukládají materiál",
           "correct": true
         },
         {
