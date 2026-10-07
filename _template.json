@@ -1,0 +1,137 @@
+{
+  "_schema": {
+    "_description": "Šablona pro tvorbu kvízových JSON souborů. Tento soubor je určen pro LLM (nebo učitele), aby pochopil strukturu a vygeneroval nové kvízy. Pole začínající podtržítkem (_) jsou POUZE dokumentace a při vytváření nového kvízu je VYNECHEJ.",
+    "_output_format": "Výsledný kvíz musí obsahovat pouze klíče 'title' a 'questions'. Žádná pole začínající '_' nesmí být v produkčním souboru.",
+    "_encoding": "UTF-8, bez BOM",
+    "_language": "Čeština (texty otázek, nápověd a odpovědí)",
+
+    "title": {
+      "_type": "string",
+      "_required": true,
+      "_description": "Název kvízu. Zobrazuje se studentům v nabídce. Krátký, výstižný.",
+      "_example": "Biologie – buňka"
+    },
+
+    "questions": {
+      "_type": "array",
+      "_required": true,
+      "_min_items": 1,
+      "_description": "Seznam otázek. Každá otázka je objekt.",
+      "_item_schema": {
+        "text": {
+          "_type": "string",
+          "_required": true,
+          "_description": "Text otázky. Může být delší věta nebo otázka. Diakritika povolena.",
+          "_example": "Které části buňky jsou zodpovědné za výrobu energie?"
+        },
+        "hint": {
+          "_type": "string",
+          "_required": false,
+          "_description": "Nápověda zobrazená studentovi PO odeslání odpovědi. Může být prázdný řetězec nebo vynecháno.",
+          "_example": "Říká se jim energetické továrny buňky."
+        },
+        "options": {
+          "_type": "array",
+          "_required": true,
+          "_min_items": 2,
+          "_description": "Možnosti odpovědí. Alespoň 2. Pořadí bude při spuštění kvízu randomizováno.",
+          "_item_schema": {
+            "text": {
+              "_type": "string",
+              "_required": true,
+              "_description": "Text odpovědi.",
+              "_example": "Mitochondrie"
+            },
+            "correct": {
+              "_type": "boolean",
+              "_required": true,
+              "_description": "true = správná odpověď, false = špatná. Alespoň jedna možnost MUSÍ být true. Pokud je true více možností, student musí vybrat VŠECHNY správné a ŽÁDNÉ špatné."
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "_rules": [
+    "Výsledný JSON obsahuje POUZE klíče 'title' a 'questions'.",
+    "Každá otázka má 'text', volitelně 'hint', a povinné 'options'.",
+    "Každá možnost má 'text' a 'correct' (boolean).",
+    "Alespoň jedna možnost v každé otázce musí mít correct: true.",
+    "Otázka se 2 možnostmi = jedna správná (typicky).",
+    "Otázka se 3+ možnostmi = může mít 1 nebo více správných.",
+    "Pokud má otázka více správných odpovědí, student je musí vybrat všechny.",
+    "Diakritika je povolena a doporučena.",
+    "Nepoužívej komentáře, pole začínající '_' ani trailing commas.",
+    "Všechny stringy používají dvojité uvozovky."
+  ],
+
+  "_examples": {
+    "_note": "Následující příklady ukazují všechny podporované konfigurace. Zkopíruj strukturu, ne obsah.",
+
+    "single_correct": {
+      "text": "Jaké je hlavní město České republiky?",
+      "hint": "Leží na řece Vltavě.",
+      "options": [
+        { "text": "Brno", "correct": false },
+        { "text": "Praha", "correct": true },
+        { "text": "Ostrava", "correct": false },
+        { "text": "Plzeň", "correct": false }
+      ]
+    },
+
+    "multiple_correct": {
+      "text": "Které z následujících jsou programovací jazyky?",
+      "hint": "Některé jsou značkovací, ne programovací.",
+      "options": [
+        { "text": "Python", "correct": true },
+        { "text": "HTML", "correct": false },
+        { "text": "JavaScript", "correct": true },
+        { "text": "CSS", "correct": false },
+        { "text": "Rust", "correct": true }
+      ]
+    },
+
+    "true_false": {
+      "text": "Slunce je hvězda.",
+      "hint": "Ano, je to nejbližší hvězda k Zemi.",
+      "options": [
+        { "text": "Pravda", "correct": true },
+        { "text": "Nepravda", "correct": false }
+      ]
+    },
+
+    "no_hint": {
+      "text": "Kolik je 7 × 8?",
+      "options": [
+        { "text": "54", "correct": false },
+        { "text": "56", "correct": true },
+        { "text": "64", "correct": false }
+      ]
+    }
+  },
+
+  "title": "UKÁZKOVÝ KVÍZ – NAHRAĎ SVÝM OBSAHEM",
+  "questions": [
+    {
+      "text": "Které části buňky jsou zodpovědné za výrobu energie?",
+      "hint": "Říká se jim energetické továrny buňky.",
+      "options": [
+        { "text": "Mitochondrie", "correct": true },
+        { "text": "Ribozomy", "correct": false },
+        { "text": "Jádro", "correct": false },
+        { "text": "Chloroplasty", "correct": true }
+      ]
+    },
+    {
+      "text": "Jaké je hlavní město České republiky?",
+      "hint": "Leží na řece Vltavě.",
+      "options": [
+        { "text": "Brno", "correct": false },
+        { "text": "Praha", "correct": true },
+        { "text": "Ostrava", "correct": false },
+        { "text": "Plzeň", "correct": false }
+      ]
+    }
+  ]
+}

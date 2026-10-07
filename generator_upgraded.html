@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor kvízů</title>
+    <style>
+        :root {
+            /* Backgrounds — clearly separated elevation levels */
+            --bg:        #0d1117;
+            --bg-2:      #161b22;
+            --bg-3:      #1f262e;
+            --bg-4:      #2a323c;
+            --bg-hover:  #333d49;
+
+            /* Borders */
+            --border:        #30363d;
+            --border-light:  #444d56;
+
+            /* Text — high contrast */
+            --text:       #e6edf3;
+            --text-dim:   #b1bac4;
+            --text-mute:  #7d8590;
+
+            /* Accent */
+            --accent:        #58a6ff;
+            --accent-hover:  #79b8ff;
+            --accent-dim:    #1f3d66;
+            --accent-text:   #0d1117;
+
+            /* Semantic */
+            --success:       #3fb950;
+            --success-dim:   #1b3a24;
+            --success-text:  #7ee787;
+            --danger:        #f85149;
+            --danger-dim:    #3d1f1f;
+            --danger-text:   #ffa198;
+            --warning:       #d29922;
+            --warning-dim:   #3a2f18;
+            --warning-text:  #e3b341;
+
+            --radius:    8px;
+            --radius-sm: 6px;
+            --mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 14px;
+            line-height: 1.55;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body { padding: 20px; overflow-x: hidden; }
+
+        .app { max-width: 1300px; margin: 0 auto; }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1 .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .header .status {
+            font-size: 12px;
+            color: var(--text-mute);
+            font-family: var(--mono);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .kbd {
+            display: inline-block;
+            background: var(--bg-3);
+            border: 1px solid var(--border-light);
+            border-bottom-width: 2px;
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 11px;
+            color: var(--text);
+            font-family: var(--mono);
+            line-height: 1.4;
+            margin: 0 1px;
+        }
+
+        /* ---------- LAYOUT ---------- */
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 12px 16px;
+            background: var(--bg-3);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-header .badge {
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .panel-body { padding: 16px; }
+
+        /* ---------- FORM ---------- */
+        .field { margin-bottom: 14px; }
+        .field:last-child { margin-bottom: 0; }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .field label .hint {
+            font-weight: 400;
+            color: var(--text-mute);
+            font-size: 11px;
+            margin-left: 6px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 9px 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 13px;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        input[type="text"]::placeholder, textarea::placeholder {
+            color: var(--text-mute);
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+        }
+
+        textarea { resize: vertical; min-height: 64px; font-family: var(--sans); }
+
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+
+        /* ---------- BUTTONS ---------- */
+        button {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            background: var(--bg-3);
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.12s, border-color 0.12s, color 0.12s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        button:hover { background: var(--bg-hover); border-color: var(--border-light); }
+        button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+        button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        button.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--accent-text);
+            font-weight: 600;
+        }
+        button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+        button.danger {
+            background: var(--danger-dim);
+            border-color: var(--danger);
+            color: var(--danger-text);
+        }
+        button.danger:hover { background: #4d2020; }
+
+        button.ghost { background: transparent; }
+        button.ghost:hover { background: var(--bg-3); }
+
+        button.small { padding: 5px 10px; font-size: 12px; }
+        button.icon { padding: 6px 8px; min-width: 32px; }
+
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-group.full button { flex: 1; }
+
+        /* ---------- OPTION ROWS ---------- */
+        .option-row {
+            display: grid;
+            grid-template-columns: 22px 1fr auto auto;
+            gap: 8px;
+            align-items: center;
+            padding: 7px 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 6px;
+            transition: border-color 0.12s, background 0.12s;
+        }
+
+        .option-row:focus-within { border-color: var(--accent); }
+
+        .option-row.correct {
+            border-color: var(--success);
+            background: var(--success-dim);
+        }
+
+        .option-row .drag-handle {
+            color: var(--text-mute);
+            font-family: var(--mono);
+            font-size: 14px;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-row input[type="text"] {
+            border: none;
+            background: transparent;
+            padding: 4px 0;
+            color: var(--text);
+        }
+        .option-row input[type="text"]:focus { box-shadow: none; border: none; }
+
+        .option-row .correct-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-dim);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .option-row .correct-toggle:hover { background: var(--bg-3); }
+        .option-row.correct .correct-toggle { color: var(--success-text); }
+
+        .option-row .correct-toggle input {
+            width: 14px; height: 14px;
+            accent-color: var(--success);
+            cursor: pointer;
+        }
+
+        /* ---------- QUESTION LIST ---------- */
+        .q-list {
+            max-height: 540px;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .q-list::-webkit-scrollbar { width: 10px; }
+        .q-list::-webkit-scrollbar-track { background: var(--bg-2); }
+        .q-list::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 5px;
+            border: 2px solid var(--bg-2);
+        }
+        .q-list::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
+
+        .q-item {
+            background: var(--bg-3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 6px;
+            transition: border-color 0.12s, background 0.12s;
+        }
+
+        .q-item:hover { border-color: var(--border-light); }
+
+        .q-item.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .q-item.selected .q-item-header { background: var(--accent-dim); }
+
+        .q-item.expanded { border-color: var(--accent); }
+
+        .q-item-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: var(--radius-sm);
+            transition: background 0.12s;
+        }
+
+        .q-item-header:hover { background: var(--bg-4); }
+
+        .q-item-header:focus {
+            outline: none;
+            background: var(--bg-4);
+        }
+
+        .q-item.selected .q-item-header:focus { background: var(--accent-dim); }
+
+        .q-item-header .num {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-mute);
+            min-width: 22px;
+        }
+
+        .q-item.selected .q-item-header .num { color: var(--accent); }
+
+        .q-item-header .text {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .q-item-header .meta {
+            font-size: 11px;
+            color: var(--text-mute);
+            font-family: var(--mono);
+            white-space: nowrap;
+        }
+
+        .q-item-header .chevron {
+            color: var(--text-mute);
+            font-family: var(--mono);
+            font-size: 12px;
+            transition: transform 0.15s;
+            width: 12px;
+            text-align: center;
+        }
+
+        .q-item.expanded .q-item-header .chevron { transform: rotate(90deg); }
+
+        .q-item-body {
+            display: none;
+            padding: 4px 12px 12px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .q-item.expanded .q-item-body { display: block; }
+
+        .q-item-body .hint-line {
+            background: var(--warning-dim);
+            border-left: 3px solid var(--warning);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--warning-text);
+            margin: 10px 0;
+        }
+
+        .q-item-body .hint-line strong {
+            color: var(--warning-text);
+            font-weight: 700;
+        }
+
+        .q-item-body .opt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 10px 0;
+        }
+
+        .q-item-body .opt {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            background: var(--bg);
+            border-radius: 4px;
+            font-size: 12.5px;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .q-item-body .opt.correct {
+            background: var(--success-dim);
+            border-color: var(--success);
+            color: var(--success-text);
+        }
+
+        .q-item-body .opt .marker {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-mute);
+            min-width: 14px;
+            font-weight: 700;
+        }
+
+        .q-item-body .opt.correct .marker { color: var(--success-text); }
+
+        .q-item-body .actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ---------- JSON PREVIEW ---------- */
+        .json-preview {
+            background: #06090d;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-family: var(--mono);
+            font-size: 11.5px;
+            line-height: 1.6;
+            color: #a5d6ff;
+            max-height: 260px;
+            overflow: auto;
+            white-space: pre;
+            tab-size: 2;
+        }
+
+        .json-preview::-webkit-scrollbar { width: 8px; height: 8px; }
+        .json-preview::-webkit-scrollbar-track { background: #06090d; }
+        .json-preview::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+
+        /* ---------- MODAL ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--bg-2);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 720px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 { font-size: 14px; font-weight: 600; color: var(--text); }
+
+        .modal-body { padding: 18px; overflow-y: auto; flex: 1; }
+
+        .modal-footer {
+            padding: 14px 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* ---------- MESSAGES ---------- */
+        .msg {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .msg.error {
+            background: var(--danger-dim);
+            border: 1px solid var(--danger);
+            color: var(--danger-text);
+        }
+
+        .msg.success {
+            background: var(--success-dim);
+            border: 1px solid var(--success);
+            color: var(--success-text);
+        }
+
+        .msg.show { display: block; }
+
+        /* ---------- HELP BAR ---------- */
+        .help-bar {
+            margin-top: 20px;
+            padding: 12px 16px;
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 12px;
+            color: var(--text-dim);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .help-bar .sep { color: var(--text-mute); }
+        .help-bar strong { color: var(--text); font-weight: 600; }
+
+        /* ---------- EMPTY ---------- */
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-mute);
+            font-size: 13px;
+        }
+
+        .empty .big {
+            font-size: 32px;
+            color: var(--border-light);
+            margin-bottom: 10px;
+            font-family: var(--mono);
+        }
+
+        /* Hint under list to indicate focus */
+        .list-focus-hint {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-mute);
+            padding: 6px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-3);
+            font-family: var(--mono);
+            display: none;
+        }
+
+        .q-list.focused + .list-focus-hint { display: block; }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header">
+        <h1><span class="dot"></span>Editor kvízů</h1>
+        <div class="status">
+            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">S</span><span>export</span>
+            <span style="margin:0 6px;color:var(--text-mute);">·</span>
+            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">O</span><span>import</span>
+            <span style="margin:0 6px;color:var(--text-mute);">·</span>
+            <span class="kbd">?</span><span>nápověda</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- ============ LEFT: FORM ============ -->
+        <div class="panel">
+            <div class="panel-header"><span>Nastavení a nová otázka</span></div>
+            <div class="panel-body">
+                <div class="msg error" id="msgError"></div>
+                <div class="msg success" id="msgSuccess"></div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="quizTitle">Název kvízu</label>
+                        <input type="text" id="quizTitle" placeholder="Biologie – buňka" value="Můj kvíz">
+                    </div>
+                    <div class="field">
+                        <label for="quizFile">Název souboru</label>
+                        <input type="text" id="quizFile" placeholder="biologie-bunka" value="kviz">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="questionText">Text otázky</label>
+                    <textarea id="questionText" placeholder="Zadejte otázku..." rows="2"></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="hintText">Nápověda <span class="hint">(zobrazí se po odpovědi)</span></label>
+                    <input type="text" id="hintText" placeholder="např. Vzpomeň si na definici...">
+                </div>
+
+                <div class="field">
+                    <label>Možnosti odpovědí <span class="hint">(označ správné)</span></label>
+                    <div id="optionsContainer"></div>
+                    <button class="ghost small" id="addOptionBtn" style="margin-top:8px;">+ Přidat možnost</button>
+                </div>
+
+                <div class="btn-group full" style="margin-top:16px;">
+                    <button class="primary" id="addQuestionBtn">Přidat otázku</button>
+                    <button class="ghost" id="clearFormBtn">Vyčistit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ RIGHT ============ -->
+        <div style="display:flex; flex-direction:column; gap:20px; min-width:0;">
+            <div class="panel">
+                <div class="panel-header">
+                    <span>Otázky v kvízu</span>
+                    <span class="badge" id="qCountBadge">0</span>
+                </div>
+                <div class="panel-body" style="padding:0;">
+                    <div class="q-list" id="questionList" tabindex="0">
+                        <div class="empty">
+                            <div class="big">∅</div>
+                            Zatím žádné otázky. Přidej je vlevo, nebo importuj JSON.
+                        </div>
+                    </div>
+                    <div class="list-focus-hint">j / k · pohyb &nbsp;|&nbsp; Enter · rozbalit &nbsp;|&nbsp; e · editovat &nbsp;|&nbsp; d · duplikovat &nbsp;|&nbsp; Del · smazat</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><span>Export / Import</span></div>
+                <div class="panel-body">
+                    <div class="btn-group" style="margin-bottom:14px;">
+                        <button class="primary" id="exportJsonBtn">Stáhnout JSON</button>
+                        <button id="importJsonBtn">Importovat JSON</button>
+                        <button class="danger" id="clearQuizBtn">Vymazat vše</button>
+                    </div>
+                    <label style="display:block; font-size:11px; color:var(--text-mute); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.06em;">Náhled JSON</label>
+                    <div class="json-preview" id="jsonPreview">// Zatím žádné otázky</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="help-bar">
+        <strong>Klávesy:</strong>
+        <span><span class="kbd">Ctrl</span>+<span class="kbd">Enter</span> přidat/uložit otázku</span>
+        <span class="sep">·</span>
+        <span><span class="kbd">Ctrl</span>+<span class="kbd">S</span> exportovat</span>
+        <span class="sep">·</span>
+        <span><span class="kbd">Ctrl</span>+<span class="kbd">O</span> importovat</span>
+        <span class="sep">·</span>
+        <span><span class="kbd">Ctrl</span>+<span class="kbd">N</span> nová otázka</span>
+        <span class="sep">·</span>
+        <span><span class="kbd">Esc</span> zavřít / vyčistit</span>
+    </div>
+</div>
+
+<!-- ============ MODAL: Import JSON ============ -->
+<div class="modal-overlay" id="importModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Importovat JSON</h3>
+            <button class="ghost small" id="importModalClose">Zavřít</button>
+        </div>
+        <div class="modal-body">
+            <div class="msg error" id="importError"></div>
+            <div class="field">
+                <label>Vlož JSON kvízu</label>
+                <textarea id="importTextarea" rows="14" style="font-family:var(--mono); font-size:12px;" placeholder='{
+  "title": "Biologie – buňka",
+  "questions": [
+    {
+      "text": "Které části buňky vyrábí energii?",
+      "hint": "Říká se jim energetické továrny.",
+      "options": [
+        { "text": "Mitochondrie", "correct": true },
+        { "text": "Ribozomy", "correct": false }
+      ]
+    }
+  ]
+}'></textarea>
+            </div>
+            <div class="field">
+                <label>Nebo nahraj soubor</label>
+                <input type="file" id="importFileInput" accept=".json,application/json" style="color:var(--text);">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="ghost" id="importCancelBtn">Zrušit</button>
+            <button class="primary" id="importConfirmBtn">Importovat</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    //  STATE
+    // ============================================================
+    let editorQuestions = [];
+    let expandedIndex = -1;
+    let selectedIndex = -1;
+    let editingIndex = -1;
+    let listHasFocus = false;
+
+    // ============================================================
+    //  DOM
+    // ============================================================
+    const $ = (id) => document.getElementById(id);
+    const quizTitleInput   = $('quizTitle');
+    const quizFileInput    = $('quizFile');
+    const questionText     = $('questionText');
+    const hintText         = $('hintText');
+    const optionsContainer = $('optionsContainer');
+    const addOptionBtn     = $('addOptionBtn');
+    const addQuestionBtn   = $('addQuestionBtn');
+    const clearFormBtn     = $('clearFormBtn');
+    const questionListDiv  = $('questionList');
+    const qCountBadge      = $('qCountBadge');
+    const exportJsonBtn    = $('exportJsonBtn');
+    const importJsonBtn    = $('importJsonBtn');
+    const clearQuizBtn     = $('clearQuizBtn');
+    const jsonPreview      = $('jsonPreview');
+    const msgError         = $('msgError');
+    const msgSuccess       = $('msgSuccess');
+
+    const importModal     = $('importModal');
+    const importTextarea  = $('importTextarea');
+    const importFileInput = $('importFileInput');
+    const importError     = $('importError');
+    const importModalClose= $('importModalClose');
+    const importCancelBtn = $('importCancelBtn');
+    const importConfirmBtn= $('importConfirmBtn');
+
+    // ============================================================
+    //  HELPERS
+    // ============================================================
+    function escapeHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }
+
+    function flash(el, msg, type) {
+        el.textContent = msg;
+        el.className = 'msg ' + type + ' show';
+        clearTimeout(el._t);
+        el._t = setTimeout(() => { el.className = 'msg ' + type; }, 3500);
+    }
+
+    function showError(msg)   { flash(msgError, msg, 'error'); }
+    function showSuccess(msg) { flash(msgSuccess, msg, 'success'); }
+
+    // ============================================================
+    //  OPTION ROWS (form)
+    // ============================================================
+    function addOptionRow(text = '', correct = false) {
+        const row = document.createElement('div');
+        row.className = 'option-row' + (correct ? ' correct' : '');
+        row.innerHTML = `
+            <div class="drag-handle">·</div>
+            <input type="text" placeholder="Text odpovědi" value="${escapeHtml(text)}">
+            <label class="correct-toggle">
+                <input type="checkbox" ${correct ? 'checked' : ''}> správně
+            </label>
+            <button class="ghost small icon" type="button" title="Odstranit">×</button>
+        `;
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        checkbox.addEventListener('change', () => {
+            row.classList.toggle('correct', checkbox.checked);
+        });
+        row.querySelector('button').addEventListener('click', () => row.remove());
+        optionsContainer.appendChild(row);
+    }
+
+    function resetOptionRows() {
+        optionsContainer.innerHTML = '';
+        addOptionRow('', false);
+        addOptionRow('', false);
+    }
+
+    function readOptionsFromForm() {
+        const rows = optionsContainer.querySelectorAll('.option-row');
+        const options = [];
+        let hasCorrect = false;
+        rows.forEach(row => {
+            const text    = row.querySelector('input[type="text"]').value.trim();
+            const correct = row.querySelector('input[type="checkbox"]').checked;
+            if (!text) return;
+            if (correct) hasCorrect = true;
+            options.push({ text, correct });
+        });
+        return { options, hasCorrect };
+    }
+
+    function fillFormFromQuestion(q) {
+        questionText.value = q.text || '';
+        hintText.value     = q.hint || '';
+        optionsContainer.innerHTML = '';
+        if (q.options && q.options.length) {
+            q.options.forEach(o => addOptionRow(o.text, o.correct));
+        } else {
+            resetOptionRows();
+        }
+    }
+
+    function resetForm() {
+        questionText.value = '';
+        hintText.value = '';
+        resetOptionRows();
+        editingIndex = -1;
+        addQuestionBtn.textContent = 'Přidat otázku';
+        questionText.focus();
+    }
+
+    // ============================================================
+    //  BUILD / PREVIEW
+    // ============================================================
+    function buildQuizObject() {
+        return {
+            title: quizTitleInput.value.trim() || 'Kvíz',
+            questions: editorQuestions.map(q => ({
+                text: q.text,
+                hint: q.hint || '',
+                options: q.options.map(o => ({ text: o.text, correct: o.correct }))
+            }))
+        };
+    }
+
+    function updatePreview() {
+        jsonPreview.textContent = editorQuestions.length
+            ? JSON.stringify(buildQuizObject(), null, 2)
+            : '// Zatím žádné otázky';
+    }
+
+    // ============================================================
+    //  ADD / UPDATE
+    // ============================================================
+    function addOrUpdateQuestion() {
+        const text = questionText.value.trim();
+        const hint = hintText.value.trim();
+
+        if (!text) { showError('Otázka musí mít text.'); questionText.focus(); return; }
+        const { options, hasCorrect } = readOptionsFromForm();
+        if (options.length < 2) { showError('Potřebujete alespoň 2 možnosti.'); return; }
+        if (!hasCorrect)        { showError('Označte alespoň jednu správnou odpověď.'); return; }
+
+        if (editingIndex >= 0 && editingIndex < editorQuestions.length) {
+            editorQuestions[editingIndex] = { text, hint, options };
+            showSuccess('Otázka upravena.');
+            expandedIndex = editingIndex;
+            selectedIndex = editingIndex;
+        } else {
+            editorQuestions.push({ text, hint, options });
+            showSuccess('Otázka přidána.');
+            expandedIndex = editorQuestions.length - 1;
+            selectedIndex = editorQuestions.length - 1;
+        }
+        resetForm();
+        renderQuestionList();
+    }
+
+    // ============================================================
+    //  RENDER QUESTION LIST
+    // ============================================================
+    function renderQuestionList() {
+        qCountBadge.textContent = editorQuestions.length;
+
+        if (editorQuestions.length === 0) {
+            questionListDiv.innerHTML = `
+                <div class="empty">
+                    <div class="big">∅</div>
+                    Zatím žádné otázky. Přidej je vlevo, nebo importuj JSON.
+                </div>`;
+            updatePreview();
+            return;
+        }
+
+        questionListDiv.innerHTML = '';
+        editorQuestions.forEach((q, i) => {
+            const item = document.createElement('div');
+            item.className = 'q-item';
+            if (i === expandedIndex) item.classList.add('expanded');
+            if (i === selectedIndex) item.classList.add('selected');
+            item.dataset.index = i;
+
+            const correctCount = q.options.filter(o => o.correct).length;
+            const multi = correctCount > 1 ? ' · multi' : '';
+
+            const header = document.createElement('div');
+            header.className = 'q-item-header';
+            header.dataset.index = i;
+            header.innerHTML = `
+                <span class="chevron">›</span>
+                <span class="num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="text">${escapeHtml(q.text)}</span>
+                <span class="meta">${q.options.length} opt${multi}</span>
+            `;
+            header.addEventListener('click', () => {
+                selectedIndex = i;
+                toggleExpand(i);
+            });
+
+            const body = document.createElement('div');
+            body.className = 'q-item-body';
+
+            let hintHtml = '';
+            if (q.hint) {
+                hintHtml = `<div class="hint-line"><strong>Nápověda:</strong> ${escapeHtml(q.hint)}</div>`;
+            }
+
+            let optsHtml = '<div class="opt-list">';
+            q.options.forEach(o => {
+                optsHtml += `
+                    <div class="opt${o.correct ? ' correct' : ''}">
+                        <span class="marker">${o.correct ? '✓' : '·'}</span>
+                        <span>${escapeHtml(o.text)}</span>
+                    </div>
+                `;
+            });
+            optsHtml += '</div>';
+
+            body.innerHTML = `
+                ${hintHtml}
+                ${optsHtml}
+                <div class="actions">
+                    <button class="small" data-action="edit">Editovat</button>
+                    <button class="small" data-action="duplicate">Duplikovat</button>
+                    <button class="small" data-action="move-up">Nahoru</button>
+                    <button class="small" data-action="move-down">Dolů</button>
+                    <button class="small danger" data-action="delete">Smazat</button>
+                </div>
+            `;
+
+            body.querySelector('[data-action="edit"]')     .addEventListener('click', e => { e.stopPropagation(); startEdit(i); });
+            body.querySelector('[data-action="duplicate"]').addEventListener('click', e => { e.stopPropagation(); duplicateQuestion(i); });
+            body.querySelector('[data-action="move-up"]')  .addEventListener('click', e => { e.stopPropagation(); moveQuestion(i, -1); });
+            body.querySelector('[data-action="move-down"]').addEventListener('click', e => { e.stopPropagation(); moveQuestion(i, 1); });
+            body.querySelector('[data-action="delete"]')   .addEventListener('click', e => { e.stopPropagation(); deleteQuestion(i); });
+
+            item.appendChild(header);
+            item.appendChild(body);
+            questionListDiv.appendChild(item);
+        });
+
+        updatePreview();
+    }
+
+    function toggleExpand(i) {
+        expandedIndex = (expandedIndex === i) ? -1 : i;
+        selectedIndex = i;
+        renderQuestionList();
+    }
+
+    function focusListItem(i) {
+        selectedIndex = i;
+        renderQuestionList();
+        // Focus the q-list container so keyboard handler keeps firing
+        questionListDiv.focus();
+    }
+
+    function startEdit(i) {
+        const q = editorQuestions[i];
+        if (!q) return;
+        fillFormFromQuestion(q);
+        editingIndex = i;
+        addQuestionBtn.textContent = 'Uložit změny';
+        questionText.focus();
+        questionText.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function duplicateQuestion(i) {
+        const q = editorQuestions[i];
+        if (!q) return;
+        editorQuestions.splice(i + 1, 0, JSON.parse(JSON.stringify(q)));
+        selectedIndex = i + 1;
+        expandedIndex = i + 1;
+        renderQuestionList();
+        questionListDiv.focus();
+    }
+
+    function moveQuestion(i, dir) {
+        const j = i + dir;
+        if (j < 0 || j >= editorQuestions.length) return;
+        [editorQuestions[i], editorQuestions[j]] = [editorQuestions[j], editorQuestions[i]];
+        selectedIndex = j;
+        expandedIndex = j;
+        renderQuestionList();
+        questionListDiv.focus();
+    }
+
+    function deleteQuestion(i) {
+        if (!confirm('Smazat tuto otázku?')) return;
+        editorQuestions.splice(i, 1);
+        if (expandedIndex === i) expandedIndex = -1;
+        if (selectedIndex >= editorQuestions.length) selectedIndex = editorQuestions.length - 1;
+        renderQuestionList();
+        questionListDiv.focus();
+    }
+
+    // ============================================================
+    //  EXPORT / IMPORT
+    // ============================================================
+    function exportJson() {
+        if (editorQuestions.length === 0) {
+            showError('Nejdříve přidejte alespoň jednu otázku.');
+            return;
+        }
+        const obj = buildQuizObject();
+        const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        let filename = quizFileInput.value.trim() || 'kviz';
+        filename = filename.replace(/\.json$/i, '') + '.json';
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        showSuccess('Soubor ' + filename + ' stažen.');
+    }
+
+    function openImportModal() {
+        importTextarea.value = '';
+        importFileInput.value = '';
+        importError.className = 'msg error';
+        importModal.classList.add('active');
+        importTextarea.focus();
+    }
+
+    function closeImportModal() {
+        importModal.classList.remove('active');
+    }
+
+    function parseAndImport(text) {
+        try {
+            const data = JSON.parse(text);
+            if (!data.questions || !Array.isArray(data.questions)) {
+                throw new Error('JSON musí obsahovat pole "questions".');
+            }
+            const validated = [];
+            data.questions.forEach((q, idx) => {
+                if (!q.text) throw new Error(`Otázka ${idx + 1} nemá text.`);
+                if (!Array.isArray(q.options) || q.options.length < 2) {
+                    throw new Error(`Otázka ${idx + 1} musí mít alespoň 2 možnosti.`);
+                }
+                const options = q.options
+                    .filter(o => o && typeof o.text === 'string' && o.text.trim())
+                    .map(o => ({ text: String(o.text).trim(), correct: !!o.correct }));
+                if (options.length < 2) throw new Error(`Otázka ${idx + 1} nemá dost platných možností.`);
+                if (!options.some(o => o.correct)) {
+                    throw new Error(`Otázka ${idx + 1} nemá označenou správnou odpověď.`);
+                }
+                validated.push({
+                    text: String(q.text).trim(),
+                    hint: (q.hint || '').toString().trim(),
+                    options
+                });
+            });
+            editorQuestions = validated;
+            if (data.title) quizTitleInput.value = data.title;
+            expandedIndex = -1;
+            selectedIndex = validated.length ? 0 : -1;
+            renderQuestionList();
+            closeImportModal();
+            showSuccess('Importováno ' + validated.length + ' otázek.');
+        } catch (e) {
+            importError.textContent = 'Chyba: ' + e.message;
+            importError.className = 'msg error show';
+        }
+    }
+
+    function confirmImport() {
+        const text = importTextarea.value.trim();
+        if (!text) {
+            importError.textContent = 'Vlož JSON nebo nahraj soubor.';
+            importError.className = 'msg error show';
+            return;
+        }
+        parseAndImport(text);
+    }
+
+    // ============================================================
+    //  EVENT LISTENERS
+    // ============================================================
+    addOptionBtn.addEventListener('click', () => addOptionRow('', false));
+    addQuestionBtn.addEventListener('click', addOrUpdateQuestion);
+    clearFormBtn.addEventListener('click', () => { resetForm(); showSuccess('Formulář vyčištěn.'); });
+    exportJsonBtn.addEventListener('click', exportJson);
+    importJsonBtn.addEventListener('click', openImportModal);
+
+    clearQuizBtn.addEventListener('click', () => {
+        if (editorQuestions.length === 0) return;
+        if (!confirm('Opravdu vymazat všechny otázky?')) return;
+        editorQuestions = [];
+        expandedIndex = -1;
+        selectedIndex = -1;
+        resetForm();
+        renderQuestionList();
+        showSuccess('Kvíz vymazán.');
+    });
+
+    importModalClose.addEventListener('click', closeImportModal);
+    importCancelBtn.addEventListener('click', closeImportModal);
+    importConfirmBtn.addEventListener('click', confirmImport);
+    importModal.addEventListener('click', e => { if (e.target === importModal) closeImportModal(); });
+
+    importFileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => { importTextarea.value = ev.target.result; };
+        reader.readAsText(file);
+    });
+
+    quizTitleInput.addEventListener('input', updatePreview);
+
+    // Track focus state of the list for the focus hint
+    questionListDiv.addEventListener('focus', () => { listHasFocus = true; questionListDiv.classList.add('focused'); });
+    questionListDiv.addEventListener('blur',  () => { listHasFocus = false; questionListDiv.classList.remove('focused'); });
+
+    // ============================================================
+    //  GLOBAL KEYBOARD HANDLER
+    //  Handles: Ctrl shortcuts, Esc, and list navigation
+    //  List navigation works when focus is anywhere in the q-list,
+    //  on a q-item header, or when no text input is focused.
+    // ============================================================
+    document.addEventListener('keydown', (e) => {
+        const k = e.key;
+        const lower = k.toLowerCase();
+
+        // ---- Ctrl / Cmd shortcuts (always active) ----
+        if (e.ctrlKey || e.metaKey) {
+            if (k === 'Enter') {
+                e.preventDefault();
+                addOrUpdateQuestion();
+                return;
+            }
+            if (lower === 's') {
+                e.preventDefault();
+                exportJson();
+                return;
+            }
+            if (lower === 'o') {
+                e.preventDefault();
+                openImportModal();
+                return;
+            }
+            if (lower === 'n') {
+                e.preventDefault();
+                resetForm();
+                questionText.focus();
+                return;
+            }
+            return; // don't process single-letter keys with Ctrl
+        }
+
+        // ---- Esc ----
+        if (k === 'Escape') {
+            if (importModal.classList.contains('active')) {
+                closeImportModal();
+            } else {
+                resetForm();
+            }
+            return;
+        }
+
+        // ---- Determine if we're in "list mode" ----
+        // True when:
+        //   - the q-list container itself has focus, OR
+        //   - a q-item header has focus, OR
+        //   - the active element is a body (nothing focused), OR
+        //   - list has focus
+        // False when an input/textarea/select/button is focused inside the form.
+        const active = document.activeElement;
+        const tag = active ? active.tagName.toLowerCase() : '';
+        const isTextInput = tag === 'input' || tag === 'textarea' || tag === 'select';
+        const isButton = tag === 'button';
+        const isInModal = importModal.contains(active);
+        const isInList = listHasFocus ||
+                         (active && active.closest('#questionList')) ||
+                         (active && active.classList.contains('q-item-header')) ||
+                         (active && active.id === 'questionList');
+
+        // Don't hijack keys inside modal
+        if (isInModal) return;
+
+        // If user is typing in a form field or clicking a button, don't hijack
+        // (except when the list container itself is focused)
+        if ((isTextInput || isButton) && !isInList) return;
+
+        // ---- List navigation ----
+        if (editorQuestions.length === 0) return;
+
+        // Ensure a selection exists
+        if (selectedIndex < 0) selectedIndex = 0;
+
+        // j / ArrowDown → next
+        if (lower === 'j' || k === 'ArrowDown') {
+            e.preventDefault();
+            const next = Math.min(editorQuestions.length - 1, selectedIndex + 1);
+            focusListItem(next);
+            scrollSelectedIntoView();
+            return;
+        }
+
+        // k / ArrowUp → previous
+        if (lower === 'k' || k === 'ArrowUp') {
+            e.preventDefault();
+            const prev = Math.max(0, selectedIndex - 1);
+            focusListItem(prev);
+            scrollSelectedIntoView();
+            return;
+        }
+
+        // Enter / Space → expand (toggle)
+        if (k === 'Enter' || k === ' ') {
+            e.preventDefault();
+            toggleExpand(selectedIndex);
+            questionListDiv.focus();
+            return;
+        }
+
+        // e → edit selected question
+        if (lower === 'e') {
+            e.preventDefault();
+            startEdit(selectedIndex);
+            return;
+        }
+
+        // d → duplicate
+        if (lower === 'd') {
+            e.preventDefault();
+            duplicateQuestion(selectedIndex);
+            return;
+        }
+
+        // Delete / Backspace → delete
+        if (k === 'Delete' || k === 'Backspace') {
+            e.preventDefault();
+            deleteQuestion(selectedIndex);
+            return;
+        }
+    });
+
+    function scrollSelectedIntoView() {
+        const el = questionListDiv.querySelector(`.q-item[data-index="${selectedIndex}"]`);
+        if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    function initSample() {
+        editorQuestions = [
+            {
+                text: "Které části buňky jsou zodpovědné za výrobu energie?",
+                hint: "Říká se jim energetické továrny buňky.",
+                options: [
+                    { text: "Mitochondrie", correct: true },
+                    { text: "Ribozomy", correct: false },
+                    { text: "Jádro", correct: false },
+                    { text: "Chloroplasty", correct: true }
+                ]
+            },
+            {
+                text: "Jaké je hlavní město České republiky?",
+                hint: "Leží na řece Vltavě.",
+                options: [
+                    { text: "Brno", correct: false },
+                    { text: "Praha", correct: true },
+                    { text: "Ostrava", correct: false },
+                    { text: "Plzeň", correct: false }
+                ]
+            }
+        ];
+        quizTitleInput.value = "Ukázkový kvíz";
+        quizFileInput.value  = "ukazkovy-kviz";
+        renderQuestionList();
+    }
+
+    resetOptionRows();
+    initSample();
+</script>
+</body>
+</html>

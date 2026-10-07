@@ -1,0 +1,155 @@
+{
+  "title": "Úvod do biologie – historie, metody a vlastnosti života",
+  "questions": [
+    {
+      "text": "Který z následujících výroků nejlépe vystihuje Aristotelův přínos biologii?",
+      "hint": "Aristoteles byl řecký filozof, který popisoval a třídil velké množství organismů.",
+      "options": [
+        { "text": "Jako první provedl pitvu lidského těla a položil základy anatomie", "correct": false },
+        { "text": "Popisoval a třídil organismy a přišel s teorií samoplození", "correct": true },
+        { "text": "Objevil krevní oběh a odmítl teorii samoplození", "correct": false },
+        { "text": "Zavedl binomiální nomenklaturu pro pojmenování druhů", "correct": false }
+      ]
+    },
+    {
+      "text": "Kdo je považován za zakladatele moderní mikrobiologie a jako první pozoroval bakterie?",
+      "hint": "Sestavil si vlastní mikroskop.",
+      "options": [
+        { "text": "Robert Hooke", "correct": false },
+        { "text": "Louis Pasteur", "correct": false },
+        { "text": "Anthony van Leeuwenhoek", "correct": true },
+        { "text": "Carl Linné", "correct": false }
+      ]
+    },
+    {
+      "text": "Co je hlavním přínosem Carla Linného pro biologii?",
+      "hint": "Týká se pojmenovávání a třídění organismů.",
+      "options": [
+        { "text": "Objev buněčného jádra", "correct": false },
+        { "text": "Zavedení binomiální nomenklatury (rodové a druhové jméno)", "correct": true },
+        { "text": "Popsání struktury DNA", "correct": false },
+        { "text": "Vyvrácení teorie miasmy", "correct": false }
+      ]
+    },
+    {
+      "text": "Která z následujících dvojic osobností je spojena s darwinistickou evoluční teorií?",
+      "hint": "Nejde o Lamarcka.",
+      "options": [
+        { "text": "Jean-Baptiste Lamarck a Gregor Mendel", "correct": false },
+        { "text": "Charles Darwin a Alfred Russel Wallace", "correct": true },
+        { "text": "Charles Darwin a Thomas Hunt Morgan", "correct": false },
+        { "text": "Alfred Russel Wallace a Louis Pasteur", "correct": false }
+      ]
+    },
+    {
+      "text": "Co je podstatou lamarckismu?",
+      "hint": "Týká se dědění znaků získaných během života.",
+      "options": [
+        { "text": "Organismy se přizpůsobují prostředí tak, že přežijí jen ti nejlepší", "correct": false },
+        { "text": "Organismy během života získávají znaky, které pak předávají potomkům", "correct": true },
+        { "text": "Všechny organismy vznikají z neživé hmoty", "correct": false },
+        { "text": "Dědičná informace je kódována v DNA", "correct": false }
+      ]
+    },
+    {
+      "text": "Který český biolog provedl první pitvu v Čechách v roce 1600?",
+      "hint": "Byl popraven katem Mydlářem.",
+      "options": [
+        { "text": "Jan Evangelista Purkyně", "correct": false },
+        { "text": "Jan Jánský", "correct": false },
+        { "text": "Ján Jesenský", "correct": true },
+        { "text": "Antonín Holý", "correct": false }
+      ]
+    },
+    {
+      "text": "Kdo objevil čtyři krevní skupiny?",
+      "hint": "Byl to český lékař.",
+      "options": [
+        { "text": "Jan Evangelista Purkyně", "correct": false },
+        { "text": "Jan Jánský", "correct": true },
+        { "text": "Ján Jesenský", "correct": false },
+        { "text": "William Harvey", "correct": false }
+      ]
+    },
+    {
+      "text": "Jaký je rozdíl mezi pozorováním a pokusem v biologii?",
+      "hint": "Jde o míru zásahu do přírodních procesů.",
+      "options": [
+        { "text": "Pozorování je aktivní manipulace, pokus je pasivní sledování", "correct": false },
+        { "text": "Pozorování je pasivní sledování, pokus je aktivní manipulace", "correct": true },
+        { "text": "Oba jsou pasivní, liší se jen délkou trvání", "correct": false },
+        { "text": "Oba jsou aktivní, liší se jen použitými přístroji", "correct": false }
+      ]
+    },
+    {
+      "text": "Co znamená pojem peer-review ve vědě?",
+      "hint": "Týká se kontroly vědeckých článků před vydáním.",
+      "options": [
+        { "text": "Finanční hodnocení vědeckého projektu", "correct": false },
+        { "text": "Kontrola vědeckých článků ostatními vědci před vydáním", "correct": true },
+        { "text": "Statistické vyhodnocení výsledků pokusu", "correct": false },
+        { "text": "Opakování pokusu nezávislým týmem", "correct": false }
+      ]
+    },
+    {
+      "text": "Která z následujících možností je příkladem modelového organismu používaného v genetice?",
+      "hint": "Má krátký generační čas a snadno se množí v laboratoři.",
+      "options": [
+        { "text": "Slon africký", "correct": false },
+        { "text": "Hmyz octomilka obecná (Drosophila melanogaster)", "correct": true },
+        { "text": "Velryba grónská", "correct": false },
+        { "text": "Kapradina lesní", "correct": false }
+      ]
+    },
+    {
+      "text": "Která z následujících vlastností života znamená, že organismy udržují stabilní vnitřní prostředí?",
+      "hint": "Termín pochází z řečtiny a znamená „stálost“.",
+      "options": [
+        { "text": "Metabolismus", "correct": false },
+        { "text": "Adaptace", "correct": false },
+        { "text": "Homeostáze", "correct": true },
+        { "text": "Vnímavost", "correct": false }
+      ]
+    },
+    {
+      "text": "Co je eusociální společenstvo?",
+      "hint": "Příkladem je včela medonosná nebo rypoš lysý.",
+      "options": [
+        { "text": "Společenstvo, kde všichni jedinci mají stejnou roli", "correct": false },
+        { "text": "Společenstvo, kde různí jedinci mají různé role a musí žít pospolu", "correct": true },
+        { "text": "Kolonie jednobuněčných organismů", "correct": false },
+        { "text": "Společenstvo vzniklé náhodným shlukem jedinců", "correct": false }
+      ]
+    },
+    {
+      "text": "Které tvrzení o vztahu živé a neživé přírody je správné?",
+      "hint": "Z hlediska chemie a fyziky mezi nimi není zásadní rozdíl.",
+      "options": [
+        { "text": "Živá příroda je složena z jiných prvků než neživá", "correct": false },
+        { "text": "Pro živou i neživou přírodu platí stejné fyzikální zákony", "correct": true },
+        { "text": "Živá příroda nepodléhá zákonu o zachování energie", "correct": false },
+        { "text": "Neživá příroda se neřídí chemickými zákony", "correct": false }
+      ]
+    },
+    {
+      "text": "Kdo objasnil strukturu DNA jako dvoušroubovici?",
+      "hint": "Vycházeli z práce Wilkinse a Franklinové.",
+      "options": [
+        { "text": "Gregor Mendel a Thomas Hunt Morgan", "correct": false },
+        { "text": "James Watson a Francis Crick", "correct": true },
+        { "text": "Louis Pasteur a Robert Koch", "correct": false },
+        { "text": "Carl Linné a William Harvey", "correct": false }
+      ]
+    },
+    {
+      "text": "Co je pasterizace?",
+      "hint": "Souvisí s Louisem Pasteurem a konzervací potravin.",
+      "options": [
+        { "text": "Metoda Barvení bakterií pro mikroskopii", "correct": false },
+        { "text": "Zahřátí potravin na teplotu, která usmrtí většinu mikroorganismů", "correct": true },
+        { "text": "Použití antibiotik k léčbě infekcí", "correct": false },
+        { "text": "Sterilizace potravin pomocí ionizujícího záření", "correct": false }
+      ]
+    }
+  ]
+}

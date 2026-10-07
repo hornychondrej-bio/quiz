@@ -1,0 +1,413 @@
+{
+  "title": "Buňka – stavba a funkce",
+  "questions": [
+    {
+      "text": "Co je základní stavební a funkční jednotka všech organismů?",
+      "hint": "Všechny živé organismy se z ní skládají.",
+      "options": [
+        {
+          "text": "Buňka",
+          "correct": true
+        },
+        {
+          "text": "Tkán",
+          "correct": false
+        },
+        {
+          "text": "Organela",
+          "correct": false
+        },
+        {
+          "text": "Molekula",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které dvě hlavní vývojové větve buněk rozlišujeme?",
+      "hint": "Jedna je „předjaderná“, druhá má jádro.",
+      "options": [
+        {
+          "text": "Prokaryota a eukaryota",
+          "correct": true
+        },
+        {
+          "text": "Prokaryota a eurykaryota",
+          "correct": false
+        },
+        {
+          "text": "Protokaryota a eukaryota",
+          "correct": false
+        },
+        {
+          "text": "Protokaryota a eurykaryota",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Kde je uložena genetická informace prokaryotické buňky?",
+      "hint": "Není obalena jadernou membránou.",
+      "options": [
+        {
+          "text": "V kruhovém chromozomu volně v cytoplazmě",
+          "correct": true
+        },
+        {
+          "text": "V jádře",
+          "correct": false
+        },
+        {
+          "text": "V mitochondrii",
+          "correct": false
+        },
+        {
+          "text": "V ribozomech",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaká je typická velikost prokaryotické buňky?",
+      "hint": "Většina bakterií je menší než eukaryotické buňky.",
+      "options": [
+        {
+          "text": "1–10 μm",
+          "correct": true
+        },
+        {
+          "text": "0,1–1 nm",
+          "correct": false
+        },
+        {
+          "text": "50–100 μm",
+          "correct": false
+        },
+        {
+          "text": "1–10 mm",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Z čeho se skládá buněčná stěna bakterií?",
+      "hint": "Podle reakce na Gramovo barvivo je dělíme na grampozitivní a gramnegativní.",
+      "options": [
+        {
+          "text": "Z peptidoglykanů",
+          "correct": true
+        },
+        {
+          "text": "Z celulózy",
+          "correct": false
+        },
+        {
+          "text": "Z chitinu",
+          "correct": false
+        },
+        {
+          "text": "Z ligninu",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je cytosol?",
+      "hint": "Není to totéž co cytoplazma.",
+      "options": [
+        {
+          "text": "Gelovitý vodný roztok látek v buňce",
+          "correct": true
+        },
+        {
+          "text": "Souhrn všech organel v buňce",
+          "correct": false
+        },
+        {
+          "text": "Vnější membrána buňky",
+          "correct": false
+        },
+        {
+          "text": "Buněčná stěna",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které struktury jsou společné prokaryotům i eukaryotům?",
+      "hint": "Patří sem membrána, cytoplazma, ribozomy a genetický materiál.",
+      "options": [
+        {
+          "text": "Cytoplazmatická membrána",
+          "correct": true
+        },
+        {
+          "text": "Ribozomy",
+          "correct": true
+        },
+        {
+          "text": "Jádro",
+          "correct": false
+        },
+        {
+          "text": "Mitochondrie",
+          "correct": false
+        },
+        {
+          "text": "Cytoplazma",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "text": "Jaká je funkce ribozomů?",
+      "hint": "Jsou to „továrny na bílkoviny“.",
+      "options": [
+        {
+          "text": "Výroba bílkovin podle mRNA",
+          "correct": true
+        },
+        {
+          "text": "Ukládání genetické informace",
+          "correct": false
+        },
+        {
+          "text": "Výroba ATP",
+          "correct": false
+        },
+        {
+          "text": "Fotosyntéza",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které události vedly ke vzniku eukaryotické buňky?",
+      "hint": "Souvisí s kyslíkem a pohlcením bakterií.",
+      "options": [
+        {
+          "text": "Velká kyslíková katastrofa",
+          "correct": true
+        },
+        {
+          "text": "Vznik fotosyntézy u sinic",
+          "correct": true
+        },
+        {
+          "text": "Zánik dinosaurů",
+          "correct": false
+        },
+        {
+          "text": "Vznik buněčné stěny",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je pravda o endoplazmatickém retikulu?",
+      "hint": "Jeden má na sobě ribozomy, druhý nemá.",
+      "options": [
+        {
+          "text": "Hrubé ER má na sobě ribozomy a tvoří bílkoviny",
+          "correct": true
+        },
+        {
+          "text": "Hladké ER vyrábí tuky, detoxikuje a skladuje vápník",
+          "correct": true
+        },
+        {
+          "text": "Hladké ER má na sobě ribozomy",
+          "correct": false
+        },
+        {
+          "text": "Hrubé ER vyrábí steroidy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaká je funkce Golgiho aparátu?",
+      "hint": "Je to „buněčná pošta“.",
+      "options": [
+        {
+          "text": "Odesílá bílkoviny ve vezikulách",
+          "correct": true
+        },
+        {
+          "text": "Vyrábí bílkoviny",
+          "correct": false
+        },
+        {
+          "text": "Vyrábí tuky a detoxifikuje buňku",
+          "correct": false
+        },
+        {
+          "text": "Slouží k pohybu buňky",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je cytoskelet?",
+      "hint": "Zajišťuje pohyb a tvar buňky.",
+      "options": [
+        {
+          "text": "Dynamický systém strukturních bílkovin",
+          "correct": true
+        },
+        {
+          "text": "Pevná vnější kostra buňky",
+          "correct": false
+        },
+        {
+          "text": "Stabilní vnitřní kostra",
+          "correct": false
+        },
+        {
+          "text": "\"Dráha\" pro motorové bílkoviny",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "text": "Ze kterých tří hlavních složek se skládá cytoskelet eukaryot?",
+      "hint": "Jedna je z aktinu, druhá z tubulinu.",
+      "options": [
+        {
+          "text": "Mikrofilamenty",
+          "correct": true
+        },
+        {
+          "text": "Mikrotubuly",
+          "correct": true
+        },
+        {
+          "text": "Intermediární filamenty",
+          "correct": true
+        },
+        {
+          "text": "Protofilamenty",
+          "correct": false
+        },
+        {
+          "text": "Mikrovakuoly",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které motorové bílkoviny se pohybují po mikrotubulech?",
+      "hint": "Každá jde opačným směrem.",
+      "options": [
+        {
+          "text": "Kinesin",
+          "correct": true
+        },
+        {
+          "text": "Dynein",
+          "correct": true
+        },
+        {
+          "text": "Myosin",
+          "correct": false
+        },
+        {
+          "text": "Aktin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je endosymbiotická teorie?",
+      "hint": "Vysvětluje původ mitochondrií a chloroplastů.",
+      "options": [
+        {
+          "text": "Mitochondrie a chloroplasty vznikly pohlcením bakterií",
+          "correct": true
+        },
+        {
+          "text": "Buňky vznikly z virů",
+          "correct": false
+        },
+        {
+          "text": "Jádro vzniklo z mitochondrie",
+          "correct": false
+        },
+        {
+          "text": "Buněčná stěna vznikla z cytoskeletu",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které znaky svědčí pro endosymbiotický původ mitochondrie?",
+      "hint": "Má vlastní DNA a ribozomy.",
+      "options": [
+        {
+          "text": "Má dvě membrány",
+          "correct": true
+        },
+        {
+          "text": "Má vlastní kruhový chromozom a ribozomy",
+          "correct": true
+        },
+        {
+          "text": "Množí se jako bakterie",
+          "correct": true
+        },
+        {
+          "text": "Je obalena jadernou membránou",
+          "correct": false
+        },
+        {
+          "text": "Obsahuje bakteriální (sinicový) chlorofyl",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které tvrzení o vakuolách je správné?",
+      "hint": "Mají mnoho funkcí – zásoba, odpad, tlak.",
+      "options": [
+        {
+          "text": "Ukládají materiál, vyrovnávají tlak a recyklují látky",
+          "correct": true
+        },
+        {
+          "text": "Jsou jen v živočišných buňkách",
+          "correct": false
+        },
+        {
+          "text": "Obsahují chlorofyl",
+          "correct": false
+        },
+        {
+          "text": "Vyrábějí ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které termíny souvisí s chloroplastem?",
+      "hint": "Thylakoidy plavou ve stromě.",
+      "options": [
+        {
+          "text": "Stroma",
+          "correct": true
+        },
+        {
+          "text": "Matrix",
+          "correct": false
+        },
+        {
+          "text": "Thylakoidy",
+          "correct": true
+        },
+        {
+          "text": "Kristy",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kvíz</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-2: #161b22;
+            --bg-3: #1f262e;
+            --bg-4: #2a323c;
+            --bg-hover: #333d49;
+            --border: #30363d;
+            --border-light: #444d56;
+            --text: #e6edf3;
+            --text-dim: #b1bac4;
+            --text-mute: #7d8590;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --accent-dim: #1f3d66;
+            --accent-text: #0d1117;
+            --success: #3fb950;
+            --success-dim: #1b3a24;
+            --success-text: #7ee787;
+            --danger: #f85149;
+            --danger-dim: #3d1f1f;
+            --danger-text: #ffa198;
+            --warning: #d29922;
+            --warning-dim: #3a2f18;
+            --warning-text: #e3b341;
+            --radius: 10px;
+            --radius-sm: 8px;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --shadow: 0 14px 28px -10px rgba(0,20,30,0.4);
+            --shadow-sm: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        [data-theme="light"] {
+            --bg: #f5f7fa;
+            --bg-2: #ffffff;
+            --bg-3: #e9edf5;
+            --bg-4: #dde3ed;
+            --bg-hover: #d0d8e4;
+            --border: #cbdae6;
+            --border-light: #b0c4d4;
+            --text: #0b2a36;
+            --text-dim: #1a3a4a;
+            --text-mute: #587a8a;
+            --accent: #2c7da0;
+            --accent-hover: #1f5e7a;
+            --accent-dim: #deedf7;
+            --accent-text: #ffffff;
+            --success: #43a047;
+            --success-dim: #d7f0d9;
+            --success-text: #1b5e20;
+            --danger: #d84545;
+            --danger-dim: #fbe0e0;
+            --danger-text: #b71c1c;
+            --warning: #f4b942;
+            --warning-dim: #fef9e7;
+            --warning-text: #9b6f00;
+            --shadow: 0 14px 28px -10px rgba(0,20,30,0.15);
+            --shadow-sm: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        * { box-sizing: border-box; font-family: var(--sans); margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 12px 10px;
+            font-size: 14px;
+            line-height: 1.45;
+            -webkit-text-size-adjust: 100%;
+            transition: background 0.2s, color 0.2s;
+        }
+        .container {
+            background: var(--bg-2);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 18px 18px;
+            width: 100%;
+            max-width: 680px;
+            border: 1px solid var(--border);
+            transition: background 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        h1 { font-size: 1.3rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+        h1 .badge { background: var(--accent); color: var(--accent-text); border-radius: 40px; padding: 3px 12px; font-size: 0.65rem; font-weight: 500; }
+        .theme-toggle {
+            background: var(--bg-3);
+            border: 1px solid var(--border-light);
+            color: var(--text-dim);
+            border-radius: 40px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s;
+            box-shadow: none;
+            font-weight: 500;
+        }
+        .theme-toggle:hover { background: var(--bg-hover); color: var(--text); transform: none; }
+        .subtitle { color: var(--text-mute); margin-bottom: 14px; font-size: 0.85rem; }
+        button {
+            background: var(--accent); border: 1px solid var(--accent); color: var(--accent-text); font-weight: 500;
+            padding: 10px 18px; border-radius: 60px; font-size: 0.85rem; cursor: pointer;
+            box-shadow: var(--shadow-sm); transition: all 0.15s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        button:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: scale(1.02); }
+        button:active { transform: scale(0.98); }
+        button:disabled { opacity: 0.45; pointer-events: none; box-shadow: none; transform: none; }
+        button.secondary {
+            background: var(--bg-3); color: var(--text); box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+        button.secondary:hover { background: var(--bg-hover); }
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+        .menu-list li a {
+            display: block; background: var(--bg-3); padding: 14px 18px; border-radius: 16px;
+            border: 1.5px solid var(--border); text-decoration: none; color: var(--text);
+            font-weight: 500; font-size: 0.9rem; transition: all 0.15s;
+            box-shadow: var(--shadow-sm);
+        }
+        .menu-list li a:hover { background: var(--bg-4); border-color: var(--accent); transform: translateX(3px); }
+        .menu-list li a .meta { display: block; font-size: 0.75rem; color: var(--text-mute); font-weight: 400; margin-top: 3px; }
+        .filter-box {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--bg-3); border: 1.5px solid var(--border);
+            border-radius: 60px; padding: 6px 16px; margin: 12px 0 10px;
+            transition: 0.15s;
+        }
+        .filter-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(88,166,255,0.15); }
+        .filter-box .icon { font-size: 0.85rem; color: var(--text-mute); font-weight: 500; }
+        .filter-box input {
+            border: none; outline: none; flex: 1;
+            font-size: 0.85rem; padding: 6px 0; background: transparent;
+            font-family: inherit; color: var(--text);
+        }
+        .filter-box input::placeholder { color: var(--text-mute); }
+        .filter-clear {
+            background: none; box-shadow: none; border: none;
+            color: var(--text-mute); cursor: pointer; font-size: 1rem;
+            padding: 4px 8px; border-radius: 40px;
+        }
+        .filter-clear:hover { background: var(--bg-hover); color: var(--accent); transform: none; }
+        .results-count { font-size: 0.75rem; color: var(--text-mute); margin-bottom: 6px; padding-left: 4px; }
+        .no-results { text-align: center; padding: 24px 16px; color: var(--text-mute); }
+        .no-results .big { font-size: 2rem; margin-bottom: 8px; }
+        .progress {
+            font-size: 0.8rem; background: var(--bg-3); padding: 6px 16px;
+            border-radius: 40px; color: var(--text-dim); font-weight: 500;
+            border: 1px solid var(--border);
+        }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .question-text { font-size: 1.15rem; font-weight: 600; line-height: 1.4; margin: 12px 0 18px; color: var(--text); word-break: break-word; }
+        .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+        .option-item {
+            display: flex; align-items: flex-start; gap: 14px; background: var(--bg-3);
+            padding: 14px 18px; border-radius: 16px; border: 1.5px solid var(--border);
+            cursor: pointer; transition: all 0.15s;
+            box-shadow: var(--shadow-sm);
+        }
+        .option-item:hover:not(.disabled) { background: var(--bg-4); border-color: var(--accent); }
+        .option-item.selected { background: var(--accent-dim); border-color: var(--accent); box-shadow: var(--shadow-sm); }
+        .option-item.disabled { cursor: default; }
+        .option-item.correct-answer { background: var(--success-dim); border-color: var(--success); }
+        .option-item.wrong-answer { background: var(--danger-dim); border-color: var(--danger); }
+        .option-item input { width: 20px; height: 20px; accent-color: var(--accent); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+        .option-item.disabled input { cursor: default; }
+        .option-text { font-size: 0.9rem; line-height: 1.4; color: var(--text); word-break: break-word; }
+        .hint-box {
+            background: var(--warning-dim); border-left: 6px solid var(--warning); padding: 14px 18px;
+            border-radius: 16px; margin: 12px 0 16px; color: var(--warning-text);
+            font-size: 0.85rem; box-shadow: var(--shadow-sm);
+            border: 1px solid var(--warning);
+        }
+        .hint-box strong { color: var(--warning-text); }
+        .feedback {
+            padding: 12px 16px; border-radius: 16px; margin: 12px 0;
+            font-weight: 500; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;
+            border: 1px solid transparent;
+        }
+        .feedback.correct { background: var(--success-dim); color: var(--success-text); border-color: var(--success); }
+        .feedback.wrong { background: var(--danger-dim); color: var(--danger-text); border-color: var(--danger); }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: center; }
+        .spinner { text-align:center; padding:32px; color:var(--text-mute); font-size:0.9rem; }
+        .error-msg { background: var(--danger-dim); color: var(--danger-text); padding:14px 18px; border-radius:16px; margin:12px 0; font-size:0.85rem; border: 1px solid var(--danger); }
+        
+        @media (max-width: 480px) {
+            body { padding: 8px 6px; font-size: 13px; }
+            .container { padding: 14px 14px; border-radius: 16px; }
+            h1 { font-size: 1.15rem; }
+            .question-text { font-size: 1rem; margin: 10px 0 14px; }
+            .option-item { padding: 12px 14px; gap: 12px; border-radius: 14px; }
+            .option-text { font-size: 0.85rem; }
+            .option-item input { width: 18px; height: 18px; }
+            .actions { margin-top: 12px; gap: 8px; }
+            button { padding: 10px 16px; font-size: 0.8rem; }
+            .hint-box, .feedback { padding: 10px 14px; font-size: 0.8rem; margin: 10px 0; }
+            .progress { font-size: 0.75rem; padding: 5px 12px; }
+            .menu-list li a { padding: 12px 14px; font-size: 0.85rem; }
+            .filter-box input { font-size: 0.8rem; }
+            .theme-toggle { font-size: 0.7rem; padding: 5px 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-row">
+        <h1>Kvíz <span class="badge">student</span></h1>
+        <button class="theme-toggle" id="themeToggle" title="Přepnout světlý/tmavý režim">Světlý</button>
+    </div>
+    <div id="appContent">
+        <div class="spinner">Načítám nabídku kvízů…</div>
+    </div>
+</div>
+
+<script>
+    // ---------- THEME ----------
+    const THEME_KEY = 'quiz-theme';
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.textContent = theme === 'dark' ? 'Světlý' : 'Tmavý';
+    }
+    function initTheme() {
+        let theme = localStorage.getItem(THEME_KEY);
+        if (!theme) {
+            theme = 'dark'; // default to dark
+        }
+        applyTheme(theme);
+    }
+    initTheme();
+
+    // ---------- CONFIG ----------
+    const BASE_PATH = './';
+
+    // ---------- STATE ----------
+    let menuItems = [];
+    let currentQuiz = null;
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let selectedAnswers = [];
+    let answerSubmitted = [];
+    let incorrectQuestions = [];
+    let repeatMode = false;
+    let menuFilter = '';
+
+    const appContent = document.getElementById('appContent');
+
+    // ---------- UTILS ----------
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+    function shuffleOptions(question) {
+        const copy = question.options.map(o => ({ ...o }));
+        question.options = shuffleArray(copy);
+    }
+    function escapeHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }
+    function getQueryParam(name) {
+        return new URLSearchParams(window.location.search).get(name);
+    }
+    function normalize(str) {
+        return (str || '').toString().toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    // ---------- THEME TOGGLE EVENT ----------
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(THEME_KEY, next);
+        applyTheme(next);
+    });
+
+    // ---------- MENU ----------
+    async function loadMenu() {
+        try {
+            const res = await fetch(BASE_PATH + 'menu.txt');
+            if (!res.ok) throw new Error('menu.txt nenalezeno (HTTP ' + res.status + ')');
+            const text = await res.text();
+            menuItems = parseMenu(text);
+        } catch (e) {
+            menuItems = [];
+            console.warn('Menu load failed:', e);
+        }
+    }
+
+    function parseMenu(text) {
+        return text.split('\n')
+            .map(l => l.trim())
+            .filter(l => l && !l.startsWith('#'))
+            .map(line => {
+                const parts = line.split('|').map(p => p.trim());
+                return {
+                    title: parts[0] || 'Bez názvu',
+                    file: parts[1] || '',
+                    description: parts[2] || ''
+                };
+            })
+            .filter(item => item.file);
+    }
+
+    function renderMenu() {
+        if (menuItems.length === 0) {
+            appContent.innerHTML = `
+                <p class="subtitle">Nabídka kvízů není k dispozici.</p>
+                <div class="error-msg">
+                    Soubor <strong>menu.txt</strong> nebyl nalezen nebo je prázdný.<br>
+                    Formát každého řádku: <code>Název|soubor.json|nepovinný popis</code>
+                </div>
+                <div class="actions" style="margin-top:16px;">
+                    <button id="reloadBtn">Zkusit znovu</button>
+                </div>
+            `;
+            document.getElementById('reloadBtn')?.addEventListener('click', init);
+            return;
+        }
+
+        const filtered = menuItems.filter(item => {
+            if (!menuFilter) return true;
+            const q = normalize(menuFilter);
+            return normalize(item.title).includes(q) || normalize(item.description).includes(q);
+        });
+
+        let listHtml = '';
+        if (filtered.length === 0) {
+            listHtml = `
+                <div class="no-results">
+                    <div class="big">?</div>
+                    <p>Žádný kvíz neodpovídá hledání „${escapeHtml(menuFilter)}“.</p>
+                </div>
+            `;
+        } else {
+            listHtml = '<ul class="menu-list">' + filtered.map(item => `
+                <li>
+                    <a href="?quiz=${encodeURIComponent(item.file)}">
+                        ${escapeHtml(item.title)}
+                        ${item.description ? `<span class="meta">${escapeHtml(item.description)}</span>` : ''}
+                    </a>
+                </li>
+            `).join('') + '</ul>';
+        }
+
+        appContent.innerHTML = `
+            <p class="subtitle">Vyber si kvíz ze seznamu:</p>
+            <div class="filter-box">
+                <span class="icon">Hledat</span>
+                <input type="text" id="menuFilterInput" placeholder="Filtrovat podle názvu nebo popisu…" value="${escapeHtml(menuFilter)}" autocomplete="off">
+                <button class="filter-clear" id="filterClearBtn" title="Vymazat filtr" style="display:${menuFilter ? 'inline-flex' : 'none'};">×</button>
+            </div>
+            <div class="results-count">${filtered.length} z ${menuItems.length} kvízů</div>
+            ${listHtml}
+        `;
+
+        const filterInput = document.getElementById('menuFilterInput');
+        filterInput.addEventListener('input', (e) => {
+            menuFilter = e.target.value;
+            renderMenu();
+            const inp = document.getElementById('menuFilterInput');
+            if (inp) {
+                inp.focus();
+                inp.setSelectionRange(inp.value.length, inp.value.length);
+            }
+        });
+        filterInput.focus();
+        filterInput.setSelectionRange(filterInput.value.length, filterInput.value.length);
+
+        document.getElementById('filterClearBtn')?.addEventListener('click', () => {
+            menuFilter = '';
+            renderMenu();
+        });
+    }
+
+    // ---------- QUIZ LOADING ----------
+    async function loadQuizFile(file) {
+        appContent.innerHTML = '<div class="spinner">Načítám kvíz…</div>';
+        try {
+            const res = await fetch(BASE_PATH + file);
+            if (!res.ok) throw new Error('Kvíz nenalezen (HTTP ' + res.status + ')');
+            const quiz = await res.json();
+            if (!quiz.questions || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+                throw new Error('Kvíz neobsahuje žádné otázky.');
+            }
+            currentQuiz = quiz;
+            startQuizSession(quiz.questions);
+        } catch (e) {
+            appContent.innerHTML = `
+                <div class="error-msg">Chyba při načítání kvízu: ${escapeHtml(e.message)}</div>
+                <div class="actions" style="margin-top:16px;">
+                    <button onclick="window.location.href='?'">Zpět na nabídku</button>
+                </div>
+            `;
+        }
+    }
+
+    // ---------- QUIZ SESSION ----------
+    function startQuizSession(questions) {
+        const shuffled = shuffleArray(questions.map(q => JSON.parse(JSON.stringify(q))));
+        shuffled.forEach(q => shuffleOptions(q));
+        activeQuestions = shuffled;
+        currentIndex = 0;
+        selectedAnswers = activeQuestions.map(() => []);
+        answerSubmitted = activeQuestions.map(() => false);
+        incorrectQuestions = [];
+        repeatMode = false;
+        renderQuiz();
+    }
+
+    function isMultiCorrect(q) {
+        return q.options.filter(o => o.correct).length > 1;
+    }
+
+    function evaluateCurrent() {
+        const q = activeQuestions[currentIndex];
+        const selected = selectedAnswers[currentIndex] || [];
+        const correctIndices = q.options.map((o, i) => o.correct ? i : -1).filter(i => i !== -1);
+        const correct = selected.length === correctIndices.length &&
+                        selected.every(i => correctIndices.includes(i)) &&
+                        correctIndices.every(i => selected.includes(i));
+        return { correct, correctIndices, selected };
+    }
+
+    function renderQuiz() {
+        const q = activeQuestions[currentIndex];
+        const total = activeQuestions.length;
+        const isMulti = isMultiCorrect(q);
+        const submitted = answerSubmitted[currentIndex];
+        const { correct, correctIndices, selected } = submitted ? evaluateCurrent() : { correct: null, correctIndices: [], selected: selectedAnswers[currentIndex] || [] };
+
+        let optionsHtml = '';
+        q.options.forEach((opt, idx) => {
+            const isSel = selected.includes(idx);
+            const inputType = isMulti ? 'checkbox' : 'radio';
+            const nameAttr = isMulti ? `q${currentIndex}` : `q${currentIndex}_r`;
+
+            let extraClass = '';
+            if (submitted) {
+                extraClass = ' disabled';
+                if (opt.correct) extraClass += ' correct-answer';
+                else if (isSel && !opt.correct) extraClass += ' wrong-answer';
+            } else if (isSel) {
+                extraClass = ' selected';
+            }
+
+            optionsHtml += `
+                <div class="option-item${extraClass}" data-opt-index="${idx}">
+                    <input type="${inputType}" name="${nameAttr}" value="${idx}" ${isSel ? 'checked' : ''} ${submitted ? 'disabled' : ''}>
+                    <span class="option-text">${escapeHtml(opt.text)}</span>
+                </div>
+            `;
+        });
+
+        let feedbackHtml = '';
+        if (submitted) {
+            if (correct) {
+                feedbackHtml = `<div class="feedback correct">Správně!</div>`;
+            } else {
+                feedbackHtml = `<div class="feedback wrong">Špatně. Správná odpověď je zvýrazněna zeleně.</div>`;
+            }
+        }
+
+        let hintHtml = '';
+        if (submitted && q.hint) {
+            hintHtml = `<div class="hint-box"><strong>Nápověda:</strong> ${escapeHtml(q.hint)}</div>`;
+        }
+
+        const isLast = currentIndex === total - 1;
+        let buttonsHtml = '';
+        if (!submitted) {
+            buttonsHtml = `<button id="submitBtn">Odeslat odpověď</button>`;
+        } else {
+            if (!isLast) {
+                buttonsHtml = `<button id="nextBtn">Další otázka</button>`;
+            } else {
+                buttonsHtml = `<button id="finishBtn">Dokončit kvíz</button>`;
+            }
+        }
+
+        appContent.innerHTML = `
+            <div class="quiz-header">
+                <span class="progress">Otázka ${currentIndex + 1} / ${total}</span>
+                ${isMulti ? '<span class="badge" style="background:var(--accent);color:var(--accent-text);border-radius:40px;padding:3px 12px;font-size:0.65rem;">více správných</span>' : ''}
+            </div>
+            <div class="question-text">${escapeHtml(q.text)}</div>
+            <div class="options">${optionsHtml}</div>
+            ${feedbackHtml}
+            ${hintHtml}
+            <div class="actions">${buttonsHtml}</div>
+        `;
+
+        if (!submitted) {
+            document.querySelectorAll('.option-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const idx = parseInt(el.dataset.optIndex);
+                    const input = el.querySelector('input');
+                    if (!input) return;
+
+                    if (input.type === 'checkbox') {
+                        const sel = selectedAnswers[currentIndex] || [];
+                        const pos = sel.indexOf(idx);
+                        if (pos === -1) sel.push(idx);
+                        else sel.splice(pos, 1);
+                        selectedAnswers[currentIndex] = sel;
+                        input.checked = !input.checked;
+                        el.classList.toggle('selected', input.checked);
+                    } else {
+                        selectedAnswers[currentIndex] = [idx];
+                        document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
+                            r.checked = false;
+                            r.closest('.option-item')?.classList.remove('selected');
+                        });
+                        input.checked = true;
+                        el.classList.add('selected');
+                    }
+                });
+            });
+        }
+
+        document.getElementById('submitBtn')?.addEventListener('click', () => {
+            const sel = selectedAnswers[currentIndex] || [];
+            if (sel.length === 0) {
+                alert('Vyber alespoň jednu odpověď.');
+                return;
+            }
+            answerSubmitted[currentIndex] = true;
+            const { correct } = evaluateCurrent();
+            if (!correct) {
+                const q = activeQuestions[currentIndex];
+                if (!incorrectQuestions.some(iq => iq.text === q.text && JSON.stringify(iq.options) === JSON.stringify(q.options))) {
+                    incorrectQuestions.push(JSON.parse(JSON.stringify(q)));
+                }
+            }
+            renderQuiz();
+        });
+
+        document.getElementById('nextBtn')?.addEventListener('click', () => {
+            currentIndex++;
+            renderQuiz();
+        });
+
+        document.getElementById('finishBtn')?.addEventListener('click', () => {
+            showSummary();
+        });
+    }
+
+    // ---------- SUMMARY & REPEAT ----------
+    function showSummary() {
+        const total = activeQuestions.length;
+        const correctCount = activeQuestions.filter((q, idx) => {
+            const selected = selectedAnswers[idx] || [];
+            const correctIndices = q.options.map((o, i) => o.correct ? i : -1).filter(i => i !== -1);
+            return selected.length === correctIndices.length &&
+                   selected.every(i => correctIndices.includes(i)) &&
+                   correctIndices.every(i => selected.includes(i));
+        }).length;
+
+        let repeatBtn = '';
+        if (incorrectQuestions.length > 0) {
+            repeatBtn = `<button id="repeatBtn">Opakovat chybné otázky (${incorrectQuestions.length})</button>`;
+        } else {
+            repeatBtn = `<p style="color:var(--success-text); font-weight:500; margin-top:14px; font-size:0.9rem;">Žádné chyby! Skvělá práce.</p>`;
+        }
+
+        appContent.innerHTML = `
+            <h1 style="margin-bottom:14px; font-size:1.3rem;">Výsledek</h1>
+            <p style="font-size:1.1rem; margin:14px 0;">Správně: <strong>${correctCount}</strong> / ${total}</p>
+            <p style="margin-bottom:18px; font-size:0.9rem;">Chybných otázek: <strong>${incorrectQuestions.length}</strong></p>
+            ${repeatBtn}
+            <div class="actions" style="margin-top:18px;">
+                <button id="menuBtn" class="secondary">Zpět na nabídku</button>
+                <button id="restartBtn" class="secondary">Celý kvíz znovu</button>
+            </div>
+        `;
+
+        document.getElementById('repeatBtn')?.addEventListener('click', () => {
+            if (incorrectQuestions.length === 0) return;
+            repeatMode = true;
+            const toRepeat = incorrectQuestions.map(q => JSON.parse(JSON.stringify(q)));
+            incorrectQuestions = [];
+            startQuizSession(toRepeat);
+        });
+
+        document.getElementById('menuBtn')?.addEventListener('click', () => {
+            window.location.href = '?';
+        });
+
+        document.getElementById('restartBtn')?.addEventListener('click', () => {
+            if (!currentQuiz) return;
+            startQuizSession(currentQuiz.questions);
+        });
+    }
+
+    // ---------- INIT ----------
+    async function init() {
+        const quizFile = getQueryParam('quiz');
+        await loadMenu();
+        if (quizFile) {
+            await loadQuizFile(quizFile);
+        } else {
+            renderMenu();
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>

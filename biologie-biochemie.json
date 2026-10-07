@@ -1,0 +1,233 @@
+{
+  "title": "Základy biochemie",
+  "questions": [
+    {
+      "text": "Který proces popisuje samovolný pohyb molekul z místa s vyšší koncentrací do místa s nižší koncentrací?",
+      "hint": "Probíhá, dokud se neustanoví rovnováha.",
+      "options": [
+        {
+          "text": "Osmóza",
+          "correct": false
+        },
+        {
+          "text": "Difuze",
+          "correct": true
+        },
+        {
+          "text": "Reverzní osmóza",
+          "correct": false
+        },
+        {
+          "text": "Aktivní transport",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je osmóza?",
+      "hint": "Týká se přesunu rozpouštědla přes polopropustnou membránu.",
+      "options": [
+        {
+          "text": "Přesun rozpuštěných látek z místa s vyšší koncentrací do místa s nižší koncentrací",
+          "correct": false
+        },
+        {
+          "text": "Samovolný přesun rozpouštědla (vody) do místa s vyšší koncentrací rozpuštěných látek",
+          "correct": true
+        },
+        {
+          "text": "Přesun vody z místa s vyšší koncentrací rozpuštěných látek do místa s nižší koncentrací",
+          "correct": false
+        },
+        {
+          "text": "Pohyb molekul proti koncentračnímu spádu za spotřeby energie",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaké prostředí je označováno jako hypertonické?",
+      "hint": "Buňka v něm ztrácí vodu.",
+      "options": [
+        {
+          "text": "Prostředí s nižší koncentrací rozpuštěných látek, než je v buňce",
+          "correct": false
+        },
+        {
+          "text": "Prostředí se stejnou koncentrací rozpuštěných látek, jako je v buňce",
+          "correct": false
+        },
+        {
+          "text": "Prostředí s vyšší koncentrací rozpuštěných látek, než je v buňce",
+          "correct": true
+        },
+        {
+          "text": "Prostředí, ve kterém buňka nasává vodu",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co se stane s buňkou v hypotonickém prostředí?",
+      "hint": "V prostředí je méně rozpuštěných látek než v buňce.",
+      "options": [
+        {
+          "text": "Buňka ztrácí vodu a smršťuje se",
+          "correct": false
+        },
+        {
+          "text": "Buňka nasává vodu a může prasknout",
+          "correct": true
+        },
+        {
+          "text": "Buňka zůstává beze změny",
+          "correct": false
+        },
+        {
+          "text": "Buňka aktivně vylučuje vodu",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které z následujících jsou hlavní biomolekuly tvořící živé organismy?",
+      "hint": "Existují čtyři základní typy.",
+      "options": [
+        {
+          "text": "Sacharidy",
+          "correct": true
+        },
+        {
+          "text": "Tuky",
+          "correct": true
+        },
+        {
+          "text": "Bílkoviny",
+          "correct": true
+        },
+        {
+          "text": "Nukleové kyseliny",
+          "correct": true
+        },
+        {
+          "text": "Minerální soli",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které prvky tvoří přibližně 99 % hmoty živých organismů?",
+      "hint": "Je jich šest.",
+      "options": [
+        {
+          "text": "Kyslík, uhlík, vodík, dusík, vápník, fosfor",
+          "correct": true
+        },
+        {
+          "text": "Kyslík, uhlík, vodík, dusík, draslík, síra",
+          "correct": false
+        },
+        {
+          "text": "Uhlík, vodík, dusík, sodík, chlor, hořčík",
+          "correct": false
+        },
+        {
+          "text": "Kyslík, uhlík, vodík, železo, kobalt, zinek",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jak se nazývají polymery složené z aminokyselin, které obsahují méně než 50 aminokyselin?",
+      "hint": "Patří sem například insulin nebo oxytocin.",
+      "options": [
+        {
+          "text": "Sacharidy",
+          "correct": false
+        },
+        {
+          "text": "Peptidy",
+          "correct": true
+        },
+        {
+          "text": "Nukleotidy",
+          "correct": false
+        },
+        {
+          "text": "Lipidy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Které tvrzení o sacharidech je správné?",
+      "hint": "Obsahují poměrně hodně kyslíku.",
+      "options": [
+        {
+          "text": "Jsou nerozpustné ve vodě",
+          "correct": false
+        },
+        {
+          "text": "Jsou rozpustné ve vodě",
+          "correct": true
+        },
+        {
+          "text": "Obsahují velmi málo kyslíku",
+          "correct": false
+        },
+        {
+          "text": "Jsou základním stavebním kamenem cytoplasmatické membrány",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je ATP?",
+      "hint": "Slouží jako energetická baterie buňky.",
+      "options": [
+        {
+          "text": "Nukleotid obohacený o fosfor, který uvolňuje energii",
+          "correct": true
+        },
+        {
+          "text": "Zásobní sacharid v těle",
+          "correct": false
+        },
+        {
+          "text": "Základní stavební kámen cytoplasmatické membrány",
+          "correct": false
+        },
+        {
+          "text": "Enzym trávicí bílkoviny",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaké jsou funkce bílkovin v těle?",
+      "hint": "Plní mnoho různých rolí.",
+      "options": [
+        {
+          "text": "Struktura (např. keratin)",
+          "correct": true
+        },
+        {
+          "text": "Enzymy",
+          "correct": true
+        },
+        {
+          "text": "Transport",
+          "correct": true
+        },
+        {
+          "text": "Svalové stahy",
+          "correct": true
+        },
+        {
+          "text": "Nositelky dědičné informace",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
