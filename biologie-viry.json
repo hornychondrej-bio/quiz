@@ -1,0 +1,325 @@
+{
+  "title": "Viry",
+  "questions": [
+    {
+      "text": "Které argumenty podporují myšlenku, že viry jsou živé?",
+      "hint": "Zaměř se na jejich schopnost měnit se v čase.",
+      "options": [
+        {
+          "text": "Vyvíjejí se a přizpůsobují",
+          "correct": true
+        },
+        {
+          "text": "Rozmnožují se",
+          "correct": true
+        },
+        {
+          "text": "Mají metabolismus",
+          "correct": false
+        },
+        {
+          "text": "Vnímají okolí",
+          "correct": false
+        },
+        {
+          "text": "Mají buňky",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je virion?",
+      "hint": "Je to samostatná částice viru mimo hostitelskou buňku.",
+      "options": [
+        {
+          "text": "Nezávislá jednotka viru mimo buňku",
+          "correct": true
+        },
+        {
+          "text": "Buňka infikovaná virem",
+          "correct": false
+        },
+        {
+          "text": "Bílkovina virové kapsidy",
+          "correct": false
+        },
+        {
+          "text": "Typ nukleové kyseliny",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co obaluje nukleovou kyselinu virionu?",
+      "hint": "Je to bílkovinný obal.",
+      "options": [
+        {
+          "text": "Kapsida",
+          "correct": true
+        },
+        {
+          "text": "Cytoplazmatická membrána",
+          "correct": false
+        },
+        {
+          "text": "Buněčná stěna",
+          "correct": false
+        },
+        {
+          "text": "Původně membrána hostitele",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jak dělíme viry podle hostitele?",
+      "hint": "Jaké viry napadájí rostliny?",
+      "options": [
+        {
+          "text": "Zooviry",
+          "correct": false
+        },
+        {
+          "text": "Fytoviry",
+          "correct": true
+        },
+        {
+          "text": "Mykoviry",
+          "correct": false
+        },
+        {
+          "text": "Fágy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jak se virion dostává do hostitelské buňky?",
+      "hint": "Může vstoupit celý, nebo jen vstříknout svou nukleovou kyselinu.",
+      "options": [
+        {
+          "text": "Vnikne do buňky a zbaví se kapsidy",
+          "correct": true
+        },
+        {
+          "text": "Vstříkne do buňky svou nukleovou kyselinu",
+          "correct": true
+        },
+        {
+          "text": "Rozpustí buněčnou stěnu a vnikne celý",
+          "correct": false
+        },
+        {
+          "text": "Zbaví se kapsidy a vnikne do buňky",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je lyzogenní cyklus viru?",
+      "hint": "Virus se začlení do DNA hostitele a čeká na spouštěč.",
+      "options": [
+        {
+          "text": "Virus se integruje do DNA hostitele a množí se s ním",
+          "correct": true
+        },
+        {
+          "text": "Virus okamžitě lyzuje buňku",
+          "correct": false
+        },
+        {
+          "text": "Virus se množí v cytoplazmě bez integrace",
+          "correct": false
+        },
+        {
+          "text": "Virus opouští buňku bez poškození",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co jsou retroviry?",
+      "hint": "Umí přepsat RNA na DNA.",
+      "options": [
+        {
+          "text": "Viry schopné měnit RNA na DNA",
+          "correct": true
+        },
+        {
+          "text": "Viry napadající pouze bakterie",
+          "correct": false
+        },
+        {
+          "text": "Velmi staré viry, na které neexistuje imunita",
+          "correct": false
+        },
+        {
+          "text": "Viry, které neobsahují kapsidu",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaký vliv měly retroviry na evoluci člověka?",
+      "hint": "Některé naše geny jsou retrovirálního původu.",
+      "options": [
+        {
+          "text": "Asi 8 % lidských genů je retrovirálních",
+          "correct": true
+        },
+        {
+          "text": "Placenta savců vzniká pomocí bílkoviny retrovirálního původu",
+          "correct": true
+        },
+        {
+          "text": "Způsobují všechny lidské rakoviny",
+          "correct": false
+        },
+        {
+          "text": "Jsou zodpovědné za vznik jádra",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jak vypadá typický bakteriofág?",
+      "hint": "Má hlavičku, krček a ocásek.",
+      "options": [
+        {
+          "text": "Nukleová kyselina je v hlavičce",
+          "correct": true
+        },
+        {
+          "text": "Ocásek proniká buněčnou stěnou a vstřikuje nukleovou kyselinu",
+          "correct": true
+        },
+        {
+          "text": "Má bičík pro pohyb",
+          "correct": false
+        },
+        {
+          "text": "Obsahuje chlorofyl",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co NENÍ pravda o chřipce?",
+      "hint": "",
+      "options": [
+        {
+          "text": "Projevuje se na rozdíl od nachlazení horečkou",
+          "correct": false
+        },
+        {
+          "text": "Šíří se vzduchem",
+          "correct": false
+        },
+        {
+          "text": "Očkováním lze zabránit infekci u většiny lidí",
+          "correct": true
+        },
+        {
+          "text": "Úmrtnost na chřipku je minimální",
+          "correct": true
+        },
+        {
+          "text": "Přenáší se pohlavním stykem",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "text": "Co je pravda o HPV?",
+      "hint": "Nejčastější pohlavně přenosná choroba.",
+      "options": [
+        {
+          "text": "Je to zkratka termínu human papilomavirus",
+          "correct": true
+        },
+        {
+          "text": "Může způsobovat rakovinu prsu",
+          "correct": false
+        },
+        {
+          "text": "V ČR je proti němu očkování zdarma",
+          "correct": true
+        },
+        {
+          "text": "Způsobuje AIDS",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Co je pravda o virové hepatitidě?",
+      "hint": "Žloutenka, zánět jater.",
+      "options": [
+        {
+          "text": "Zánět jater šířící se tekutinami",
+          "correct": true
+        },
+        {
+          "text": "Existuje více typů lišících se závažností",
+          "correct": true
+        },
+        {
+          "text": "Ročně umírá asi milion lidí",
+          "correct": true
+        },
+        {
+          "text": "Způsobuje ji pouze jeden typ viru",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jak lze viry využít v medicíně?",
+      "hint": "Onkolytické viry a fágová terapie.",
+      "options": [
+        {
+          "text": "Onkolytické viry napadají rakovinné buňky",
+          "correct": true
+        },
+        {
+          "text": "Fágová terapie jako alternativa antibiotik",
+          "correct": true
+        },
+        {
+          "text": "Viry se používají k výrobě inzulinu",
+          "correct": false
+        },
+        {
+          "text": "Viry mohou doplňovat chybějící geny z jiných buněk",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "text": "Jaké provejy má nemoc vyvolaná lyssavirem?",
+      "hint": "Lyssavirus způsobuje vzteklinu",
+      "options": [
+        {
+          "text": "Agresivita",
+          "correct": true
+        },
+        {
+          "text": "Paralýza",
+          "correct": true
+        },
+        {
+          "text": "Zvracení",
+          "correct": false
+        },
+        {
+          "text": "Průjmy",
+          "correct": false
+        },
+        {
+          "text": "Zánět ledvin",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
